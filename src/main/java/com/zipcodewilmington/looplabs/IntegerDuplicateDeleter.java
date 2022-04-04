@@ -16,27 +16,28 @@ public final class IntegerDuplicateDeleter extends DuplicateDeleter<Integer> {
     @Override
     public Integer[] removeDuplicates(int maxNumberOfDuplications) {
         ArrayList<Integer> arrayL = new ArrayList<>(Arrays.asList(array));
-        int count = 0;
+        ArrayList<Integer> location = new ArrayList<>();
         for (int i = 0; i < arrayL.size(); i++) {
-            ArrayList<Integer> location = new ArrayList<>();
             Integer toLookFor = arrayL.get(i);
             for (int j = 0; j < arrayL.size(); j++) {
                 if (arrayL.get(j) == toLookFor) {
-                    count++;
                     location.add(j);
                 }
             }
-            if (count >= maxNumberOfDuplications) {
+            if (location.size() >= maxNumberOfDuplications) {
                 ArrayList<Integer> arrayLCopy = new ArrayList<>(arrayL);
                 arrayL.clear();
-                for (int k = 0; k < arrayL.size(); k++) {
-                    if (!location.contains(k)) {
+                for (int k = 0; k < arrayLCopy.size(); k++) {
+                    if (location.contains(k)) {
+                    } else {
                         arrayL.add(arrayLCopy.get(k));
                     }
                 }
                 i--;
+                location.clear();
+            } else {
+                location.clear();
             }
-            count = 0;
         }
         Integer[] output = new Integer[arrayL.size()];
         for (int l = 0; l < arrayL.size(); l++) {
@@ -48,27 +49,28 @@ public final class IntegerDuplicateDeleter extends DuplicateDeleter<Integer> {
     @Override
     public Integer[] removeDuplicatesExactly(int exactNumberOfDuplications) {
         ArrayList<Integer> arrayL = new ArrayList<>(Arrays.asList(array));
-        int count = 0;
+        ArrayList<Integer> location = new ArrayList<>();
         for (int i = 0; i < arrayL.size(); i++) {
-            ArrayList<Integer> location = new ArrayList<>();
             Integer toLookFor = arrayL.get(i);
             for (int j = 0; j < arrayL.size(); j++) {
                 if (arrayL.get(j) == toLookFor) {
-                    count++;
                     location.add(j);
                 }
             }
-            if (count == exactNumberOfDuplications) {
+            if (location.size() == exactNumberOfDuplications) {
                 ArrayList<Integer> arrayLCopy = new ArrayList<>(arrayL);
                 arrayL.clear();
-                for (int k = 0; k < arrayL.size(); k++) {
-                    if (!location.contains(k)) {
+                for (int k = 0; k < arrayLCopy.size(); k++) {
+                    if (location.contains(k)) {
+                    } else {
                         arrayL.add(arrayLCopy.get(k));
                     }
                 }
                 i--;
+                location.clear();
+            } else {
+                location.clear();
             }
-            count = 0;
         }
         Integer[] output = new Integer[arrayL.size()];
         for (int l = 0; l < arrayL.size(); l++) {
